@@ -111,26 +111,32 @@ body {
     background-color: #1e2739;
 }
 
-/* Dashboard and training styles */
-.training-phases, .upcoming-trainings {
-    margin-bottom: 20px;
-}
-
-.training-phases h2, .upcoming-trainings h2 {
+/* Module styles */
+.module-content h2 {
     font-size: 20px;
     margin-bottom: 10px;
 }
 
-.phase-card {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    background-color: #f0f0f0;
+.module-content p {
+    margin-bottom: 15px;
 }
 
-.phase-card.open { background-color: #d9edf7; }
-.phase-card.closed { background-color: #f2dede; }
-.phase-card.uncounted { background-color: #fcf8e3; }
-.phase-card.all { background-color: #dff0d8; }
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th, .table-container td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table-container th {
+    background-color: #f2f2f2;
+}
