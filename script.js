@@ -1,4 +1,4 @@
-// Function to create and append an element with given properties
+// Utility function to create and append elements
 function createElement(tag, className, textContent = '', parent) {
     const element = document.createElement(tag);
     if (className) element.className = className;
@@ -7,61 +7,26 @@ function createElement(tag, className, textContent = '', parent) {
     return element;
 }
 
-// Initialize the app
-function initApp() {
-    const app = document.getElementById('app');
+// Function to clear content from an element
+function clearContent(element) {
+    element.innerHTML = '';
+}
 
-    // Container
-    const container = createElement('div', 'container', '', app);
+// Function to load Start page content
+function loadStartPage(contentContainer) {
+    clearContent(contentContainer);
+    createElement('h2', '', 'Witamy na stronie głównej!', contentContainer);
+    createElement('p', '', 'Tutaj znajdziesz wszystkie informacje wprowadzające.', contentContainer);
+}
 
-    // Sidebar
-    const sidebar = createElement('nav', 'sidebar', '', container);
-    createElement('div', 'logo', 'LOGO', sidebar);
-    const navList = createElement('ul', '', '', sidebar);
-
-    const navItems = [
-        'Start', 'Pulpit szkoleń', 'Klienci', 'Szkolenia otwarte', 
-        'Szkolenia zamknięte', 'Sale szkoleniowe', 'Usługi', 
-        'Trenerzy', 'Grupy tematyczne', 'Statusy szkoleń', 
-        'Szkolenia - fazy', 'Szablony'
-    ];
-
-    navItems.forEach(item => {
-        const li = createElement('li', '', '', navList);
-        createElement('a', '', item, li).href = '#';
-    });
-
-    // Main Content
-    const mainContent = createElement('main', 'main-content', '', container);
-
-    // Header with notifications and user info
-    const mainHeader = createElement('header', 'main-header', '', mainContent);
-    const headerNotifications = createElement('div', 'header-notifications', '', mainHeader);
-
-    const notifications = [
-        { icon: '🔔', badge: 2 },
-        { icon: '💬' },
-        { icon: '📊' }
-    ];
-
-    notifications.forEach(({ icon, badge }) => {
-        const span = createElement('span', 'icon', icon, headerNotifications);
-        if (badge) {
-            createElement('span', 'badge', badge, span);
-        }
-    });
-
-    const userInfo = createElement('div', 'user-info', '', mainHeader);
-    createElement('span', 'user-icon', 'VY', userInfo);
-    createElement('button', 'dropdown', '▼', userInfo);
-
-    // Dashboard Content
-    const dashboard = createElement('section', 'dashboard', '', mainContent);
-
-    // Training Phases
-    const trainingPhases = createElement('div', 'training-phases', '', dashboard);
+// Function to load Training Dashboard content
+function loadTrainingDashboard(contentContainer) {
+    clearContent(contentContainer);
+    
+    // Training Phases section
+    const trainingPhases = createElement('div', 'training-phases', '', contentContainer);
     createElement('h2', '', 'Szkolenia w fazach', trainingPhases);
-
+    
     const phases = [
         { class: 'open', text: 'Szkolenia otwarte', count: 7 },
         { class: 'closed', text: 'Szkolenia zamknięte', count: 4 },
@@ -74,18 +39,81 @@ function initApp() {
         createElement('span', '', count, phaseCard);
     });
 
-    // Upcoming Trainings
-    const upcomingTrainings = createElement('div', 'upcoming-trainings', '', dashboard);
+    // Upcoming Trainings section
+    const upcomingTrainings = createElement('div', 'upcoming-trainings', '', contentContainer);
     createElement('h2', '', 'Nadchodzące szkolenia', upcomingTrainings);
     createElement('p', '', 'Brak danych do wyświetlenia', upcomingTrainings);
-
-    // Training Statuses
-    const trainingStatuses = createElement('div', 'training-statuses', '', dashboard);
-    createElement('h2', '', 'Statusy szkoleń', trainingStatuses);
-    // Here you would add more content or graphics, such as a chart
-
-    // Add further modular sections as required
 }
 
-// Run the app initialization
-initApp();
+// Function to show the login page
+function showLoginPage() {
+    const app = document.getElementById('app');
+    clearContent(app);
+
+    const loginContainer = createElement('div', 'login-container', '', app);
+    createElement('h2', '', 'Zaloguj się', loginContainer);
+
+    const form = createElement('form', '', '', loginContainer);
+
+    createElement('label', '', 'Login:', form);
+    const loginInput = createElement('input', '', '', form);
+    loginInput.type = 'text';
+    loginInput.placeholder = 'Login';
+
+    createElement('label', '', 'Hasło:', form);
+    const passwordInput = createElement('input', '', '', form);
+    passwordInput.type = 'password';
+    passwordInput.placeholder = 'Hasło';
+
+    const loginButton = createElement('button', '', 'Zaloguj się', form);
+    loginButton.type = 'button';
+
+    loginButton.addEventListener('click', () => {
+        const username = loginInput.value;
+        const password = passwordInput.value;
+
+        if (username === 'admin' && password === 'admin') {
+            initDashboard();
+        } else {
+            alert('Nieprawidłowy login lub hasło');
+        }
+    });
+}
+
+// Initialize the dashboard after login
+function initDashboard() {
+    const app = document.getElementById('app');
+    clearContent(app);
+
+    // Container
+    const container = createElement('div', 'container', '', app);
+
+    // Sidebar
+    const sidebar = createElement('nav', 'sidebar', '', container);
+    createElement('div', 'logo', 'LOGO', sidebar);
+    const navList = createElement('ul', '', '', sidebar);
+
+    const navItems = [
+        { name: 'Start', action: loadStartPage },
+        { name: 'Pulpit szkoleń', action: loadTrainingDashboard },
+        // Additional nav items can be added here
+    ];
+
+    const mainContent = createElement('main', 'main-content', '', container);
+
+    navItems.forEach(item => {
+        const li = createElement('li', '', '', navList);
+        const link = createElement('a', '', item.name, li);
+        link.href = '#';
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            item.action(mainContent);
+        });
+    });
+
+    // Load the default page (Start) on initial load
+    loadStartPage(mainContent);
+}
+
+// Run the app initialization - starts with login page
+showLoginPage();
