@@ -2,33 +2,10 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM/ERM System</title>
-    <style>
-        /* Basic styles for layout and visibility */
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; }
-        .container { display: flex; width: 100%; }
-        .sidebar { width: 250px; background-color: #f4f4f4; height: 100vh; padding: 20px; }
-        .sidebar .logo { font-size: 24px; font-weight: bold; margin-bottom: 20px; }
-        .sidebar ul { list-style: none; padding: 0; }
-        .sidebar ul li { margin-bottom: 10px; }
-        .sidebar ul li a { text-decoration: none; color: #333; display: block; padding: 10px; border-radius: 4px; }
-        .sidebar ul li a:hover { background-color: #ddd; }
-        .main-content { flex-grow: 1; padding: 20px; }
-        .main-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #ddd; }
-        .header-notifications .icon { position: relative; margin-right: 20px; }
-        .header-notifications .badge { position: absolute; top: -5px; right: -10px; background-color: red; color: white; padding: 3px 7px; border-radius: 50%; font-size: 12px; }
-        .user-info { display: flex; align-items: center; }
-        .user-icon { background-color: #ccc; color: white; padding: 10px; border-radius: 50%; margin-right: 10px; }
-        .dropdown { background-color: #fff; border: none; cursor: pointer; }
-        .dashboard { margin-top: 20px; }
-        .training-phases, .upcoming-trainings, .training-statuses { margin-bottom: 20px; }
-        .training-phases .phase-card { display: inline-block; width: 150px; padding: 15px; margin-right: 10px; text-align: center; border-radius: 4px; color: white; font-weight: bold; }
-        .training-phases .phase-card.open { background-color: #007bff; }
-        .training-phases .phase-card.closed { background-color: #6c757d; }
-        .training-phases .phase-card.uncounted { background-color: #ffc107; }
-        .training-phases .phase-card.all { background-color: #dc3545; }
-    </style>
+    <title>System Zarządzania Szkoleniami</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="app"></div>
