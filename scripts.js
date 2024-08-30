@@ -45,6 +45,52 @@ function loadTrainingDashboard(contentContainer) {
     createElement('p', '', 'Brak danych do wyświetlenia', upcomingTrainings);
 }
 
+// Function to load Participants Management page content
+function loadParticipantsManagement(contentContainer) {
+    clearContent(contentContainer);
+
+    createElement('h2', '', 'Zarządzanie uczestnikami', contentContainer);
+
+    const participantsList = createElement('div', 'table-container', '', contentContainer);
+    const table = createElement('table', '', '', participantsList);
+    const thead = createElement('thead', '', '', table);
+    const tbody = createElement('tbody', '', '', table);
+
+    // Table header
+    const headerRow = createElement('tr', '', '', thead);
+    ['Imię', 'Nazwisko', 'Email', 'Status'].forEach(text => {
+        createElement('th', '', text, headerRow);
+    });
+
+    // Table data (example)
+    const participants = [
+        { firstName: 'Jan', lastName: 'Kowalski', email: 'jan.kowalski@example.com', status: 'Aktywny' },
+        { firstName: 'Anna', lastName: 'Nowak', email: 'anna.nowak@example.com', status: 'Nieaktywny' },
+    ];
+
+    participants.forEach(participant => {
+        const row = createElement('tr', '', '', tbody);
+        createElement('td', '', participant.firstName, row);
+        createElement('td', '', participant.lastName, row);
+        createElement('td', '', participant.email, row);
+        createElement('td', '', participant.status, row);
+    });
+}
+
+// Function to load Reports page content
+function loadReports(contentContainer) {
+    clearContent(contentContainer);
+    createElement('h2', '', 'Raporty', contentContainer);
+    createElement('p', '', 'Generowanie i przeglądanie raportów z systemu.', contentContainer);
+}
+
+// Function to load Settings page content
+function loadSettings(contentContainer) {
+    clearContent(contentContainer);
+    createElement('h2', '', 'Ustawienia', contentContainer);
+    createElement('p', '', 'Konfiguracja ustawień systemowych.', contentContainer);
+}
+
 // Function to show the login page
 function showLoginPage() {
     const app = document.getElementById('app');
@@ -85,35 +131,36 @@ function initDashboard() {
     const app = document.getElementById('app');
     clearContent(app);
 
-    // Container
     const container = createElement('div', 'container', '', app);
 
     // Sidebar
-    const sidebar = createElement('nav', 'sidebar', '', container);
-    createElement('div', 'logo', 'LOGO', sidebar);
-    const navList = createElement('ul', '', '', sidebar);
+    const sidebar = createElement('div', 'sidebar', '', container);
+    createElement('div', 'logo', 'System Zarządzania', sidebar);
 
-    const navItems = [
+    const menuList = createElement('ul', '', '', sidebar);
+    
+    const menuItems = [
         { name: 'Start', action: loadStartPage },
-        { name: 'Pulpit szkoleń', action: loadTrainingDashboard },
-        // Additional nav items can be added here
+        { name: 'Panel Szkoleniowy', action: loadTrainingDashboard },
+        { name: 'Zarządzanie Uczestnikami', action: loadParticipantsManagement },
+        { name: 'Raporty', action: loadReports },
+        { name: 'Ustawienia', action: loadSettings },
     ];
 
-    const mainContent = createElement('main', 'main-content', '', container);
+    const mainContent = createElement('div', 'main-content', '', container);
 
-    navItems.forEach(item => {
-        const li = createElement('li', '', '', navList);
-        const link = createElement('a', '', item.name, li);
+    menuItems.forEach(({ name, action }) => {
+        const menuItem = createElement('li', '', '', menuList);
+        const link = createElement('a', '', name, menuItem);
         link.href = '#';
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            item.action(mainContent);
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            action(mainContent);
         });
     });
 
-    // Load the default page (Start) on initial load
     loadStartPage(mainContent);
 }
 
-// Run the app initialization - starts with login page
+// Start by showing the login page
 showLoginPage();
